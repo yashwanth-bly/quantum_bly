@@ -1,0 +1,1 @@
+enum LoginScreenType { login, signup }
