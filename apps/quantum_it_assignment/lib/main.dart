@@ -22,35 +22,35 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider<AuthRepository>(
       create: (context) => AuthRepository(),
-      child: GlobalLoaderOverlay(
-        overlayOpacity: 0.5,
-        overlayColor: Colors.brown.withOpacity(0.5),
-        useDefaultLoading: false,
-        overlayWidget: const Center(
-          child: Text(
-            'Loading...',
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+      child: BlocProvider<SplashCubit>(
+        create: (context) => SplashCubit(
+          authRepository: context.read<AuthRepository>(),
         ),
-        child: MaterialApp(
-          title: 'Quantum',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            primaryColor: Colors.blueGrey,
-            useMaterial3: true,
-            appBarTheme: const AppBarTheme(
-              color: Colors.white70,
+        child: GlobalLoaderOverlay(
+          overlayOpacity: 0.5,
+          overlayColor: Colors.brown.withOpacity(0.5),
+          useDefaultLoading: false,
+          overlayWidget: const Center(
+            child: Text(
+              'Loading...',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          home: BlocProvider<SplashCubit>(
-            create: (context) => SplashCubit(
-              authRepository: context.read<AuthRepository>(),
-            )..load(),
-            child: const SplashScreen(),
+          child: MaterialApp(
+            title: 'Quantum',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              primaryColor: Colors.blueGrey,
+              useMaterial3: true,
+              appBarTheme: const AppBarTheme(
+                color: Colors.white70,
+              ),
+            ),
+            home: const SplashScreen(),
           ),
         ),
       ),

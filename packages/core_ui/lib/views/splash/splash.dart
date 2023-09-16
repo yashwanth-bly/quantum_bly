@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:core_ui/views/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -10,6 +9,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<SplashCubit, SplashState>(
+        bloc: context.read<SplashCubit>()..load(),
         listener: (context, state) {
           if (state is SplashNavigateToLogin) {
             Navigator.pushAndRemoveUntil(
