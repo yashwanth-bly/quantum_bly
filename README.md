@@ -9,7 +9,7 @@ This project is structured in modules. The main app is present in apps directory
 The core package contains all the non UI related code.
 The core_ui package contains all the UI related code.
 ###### Advantages of this code architecture
-Code resuability and code organisation. The same packages can be imported to n number of apps.
+Code re-usability and code organisation. The same packages can be imported to n number of apps.
 
 ### Third party packages used:
 - **flutter_bloc**: Used for state management.
@@ -29,4 +29,4 @@ Code resuability and code organisation. The same packages can be imported to n n
 Import this project from root i.e, we should see apps and packages directory in IDE.
 then run `flutter pub get` under packages/core and packages/core_ui directories. Then run `flutter pub get` under apps/quantum_it_assignment
 Check the configuration file in IDE that should point to `../apps/quantum_it_assignment/lib/main.dart`
-Then run the app normaly.
+Then run the app normally.
