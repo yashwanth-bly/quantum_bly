@@ -12,6 +12,12 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/core/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/packages/core/build" />
       <excludeFolder url="file://$MODULE_DIR$/packages/core/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/news/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/news/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/news/build" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/news_ui/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/news_ui/build" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/news_ui/.pub" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
