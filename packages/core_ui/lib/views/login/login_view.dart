@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -76,6 +77,7 @@ class _LoginViewState extends State<LoginView> {
                     // obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Johndeo@gmail.com',
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w100),
                       errorText: userNameError,
                       enabledBorder: const UnderlineInputBorder(),
                       labelText: 'Email',
@@ -90,29 +92,57 @@ class _LoginViewState extends State<LoginView> {
                     obscureText: true,
                     decoration: InputDecoration(
                         border: const UnderlineInputBorder(),
+                        hintStyle: const TextStyle(fontWeight: FontWeight.w100),
                         labelText: 'Password',
                         errorText: passwordError,
                         hintText: "Password"),
                   ),
                 ),
-                const Text(
-                  'Forgot password?',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: Colors.red),
-                ),
                 const Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.only(top: 16, bottom: 24),
                   child: Text(
-                    'Login with',
+                    'Forgot password?',
                     style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.red),
                   ),
                 ),
-                 Row(
+                const Text(
+                  'Login with',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          context.read<LoginCubit>().googleSignIn();
+                        },
+                        child: SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: Image.asset('assets/img.png')),
+                      ),
+                      // const SizedBox(
+                      //   width: 30,
+                      // ),
+                      // GestureDetector(
+                      //   onTap: () {},
+                      //   child: SizedBox(
+                      //       height: 30,
+                      //       width: 30,
+                      //       child: Image.asset('assets/img_1.png')),
+                      // ),
+                    ],
+                  ),
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
@@ -139,10 +169,17 @@ class _LoginViewState extends State<LoginView> {
           ),
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
-        LoginButton(onTap: () {}, name: 'Login')
+        LoginButton(onTap: () => _onTapSubmit(context), name: 'Login')
       ],
     );
+  }
+
+  void _onTapSubmit(BuildContext context) {
+    context.read<LoginCubit>().login(
+          email: userNameController.text,
+          password: passwordController.text,
+        );
   }
 }
