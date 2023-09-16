@@ -13,11 +13,15 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> login({required String email, required String password}) async {
     emit(LoginLoading());
     try {
-      final credential = await _authRepository.login(
-        email: email,
-        password: password,
-      );
-      emit(LoginSuccessful());
+      if (UtilFunctions.isEmailValid(email) && password.length >= 6) {
+        await _authRepository.login(
+          email: email,
+          password: password,
+        );
+        emit(LoginSuccessful());
+      } else {
+        emit(const LoginError('Invalid email or password'));
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -32,7 +36,15 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> signup({required String email, required String password}) async {
     emit(LoginLoading());
     try {
-      emit(RegistrationSuccess());
+      if (UtilFunctions.isEmailValid(email) && password.length >= 6) {
+        await _authRepository.signup(
+          email: email,
+          password: password,
+        );
+        emit(RegistrationSuccess());
+      } else {
+        emit(const LoginError('Invalid email or password'));
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');

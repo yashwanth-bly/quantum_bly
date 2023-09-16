@@ -24,12 +24,19 @@ class _LoginPageState extends State<LoginPage> {
         }
 
         if (state is RegistrationSuccess || state is LoginSuccessful) {
+          UtilFunctions.showInSnackBar(
+            context,
+            (state is RegistrationSuccess)
+                ? 'User Registration Successful'
+                : 'Login successful',
+          );
           Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const HomeScreen(),
-              ),
-              (route) => false);
+            context,
+            MaterialPageRoute(
+              builder: (_) => const HomeScreen(),
+            ),
+            (route) => false,
+          );
         }
         if (state is LoginError) {
           _showError(state.error);
@@ -45,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
+              height: kToolbarHeight,
               padding: const EdgeInsets.all(8.0),
               decoration: const BoxDecoration(
                 color: Colors.red,
@@ -68,9 +76,10 @@ class _LoginPageState extends State<LoginPage> {
                   Text(
                     'X',
                     style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    ),
                   )
                 ],
               ),
@@ -200,14 +209,19 @@ class _ToggleButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? Colors.red : null,
           borderRadius: const BorderRadius.only(
-              bottomRight: Radius.circular(30),
-              bottomLeft: Radius.circular(30)),
+            bottomRight: Radius.circular(30),
+            bottomLeft: Radius.circular(30),
+          ),
         ),
         child: Center(
-            child: Text(
-          name,
-          style: TextStyle(color: selected ? Colors.white : null),
-        )),
+          child: Text(
+            name,
+            style: TextStyle(
+                color: selected ? Colors.white : null,
+                fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
+                fontSize: 18),
+          ),
+        ),
       ),
     );
   }

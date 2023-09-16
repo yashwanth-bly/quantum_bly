@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Colors.blueGrey,
             useMaterial3: true,
             appBarTheme: const AppBarTheme(
-              color: Colors.blueGrey,
+              color: Colors.white70,
             ),
           ),
           home: BlocProvider<SplashCubit>(

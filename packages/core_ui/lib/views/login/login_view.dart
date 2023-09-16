@@ -77,6 +77,7 @@ class _LoginViewState extends State<LoginView> {
                     // obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Johndeo@gmail.com',
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w100),
                       errorText: userNameError,
                       enabledBorder: const UnderlineInputBorder(),
                       labelText: 'Email',
@@ -91,6 +92,7 @@ class _LoginViewState extends State<LoginView> {
                     obscureText: true,
                     decoration: InputDecoration(
                         border: const UnderlineInputBorder(),
+                        hintStyle: const TextStyle(fontWeight: FontWeight.w100),
                         labelText: 'Password',
                         errorText: passwordError,
                         hintText: "Password"),

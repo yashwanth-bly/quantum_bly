@@ -1,4 +1,3 @@
-import 'package:core/bloc/bloc.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
@@ -17,22 +16,22 @@ class _SignupViewState extends State<SignupView> {
   String? weakPassword;
   String? invalidPhoneNumber;
 
-  late final TextEditingController userNameController1;
+  late final TextEditingController userNameController;
 
-  late final TextEditingController passwordController1;
-  late bool click = false;
+  late final TextEditingController passwordController;
+  bool termsConditionsCheckbox = false;
 
   @override
   void initState() {
     super.initState();
-    userNameController1 = TextEditingController();
-    passwordController1 = TextEditingController();
+    userNameController = TextEditingController();
+    passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    userNameController1.dispose();
-    passwordController1.dispose();
+    userNameController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -78,6 +77,7 @@ class _SignupViewState extends State<SignupView> {
                     decoration: InputDecoration(
                       hintText: 'John deo',
                       enabledBorder: UnderlineInputBorder(),
+                      hintStyle: TextStyle(fontWeight: FontWeight.w100),
                       labelText: 'Name',
                       suffix: Icon(
                         Icons.person_rounded,
@@ -86,10 +86,11 @@ class _SignupViewState extends State<SignupView> {
                     ),
                   ),
                   TextField(
-                    controller: userNameController1,
+                    controller: userNameController,
                     // obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Johndeo@gmail.com',
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w100),
                       errorText: invalidEmail,
                       enabledBorder: const UnderlineInputBorder(),
                       labelText: 'Email',
@@ -104,9 +105,10 @@ class _SignupViewState extends State<SignupView> {
                     //obscureText: true,
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(),
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w100),
                       labelText: 'Phone Number',
                       errorText: invalidPhoneNumber,
-                      hintText: "9876543210",
+                      hintText: '9876543210',
                       suffix: const Icon(
                         Icons.phone,
                         color: Colors.red,
@@ -114,13 +116,15 @@ class _SignupViewState extends State<SignupView> {
                     ),
                   ),
                   TextField(
-                    controller: passwordController1,
+                    controller: passwordController,
+
                     obscureText: true,
                     decoration: InputDecoration(
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w100),
                       border: const UnderlineInputBorder(),
                       labelText: 'Password',
                       errorText: weakPassword,
-                      hintText: "Password",
+                      hintText: 'Password',
                       suffix: const Icon(
                         Icons.lock_outline,
                         color: Colors.red,
@@ -133,14 +137,10 @@ class _SignupViewState extends State<SignupView> {
                       IconButton(
                         onPressed: () {
                           setState(() {
-                            if (click == true) {
-                              click = false;
-                            } else {
-                              click = true;
-                            }
+                            termsConditionsCheckbox = !termsConditionsCheckbox;
                           });
                         },
-                        icon: click == true
+                        icon: termsConditionsCheckbox
                             ? const Icon(
                                 Icons.check_box,
                                 color: Colors.red,
@@ -204,9 +204,12 @@ class _SignupViewState extends State<SignupView> {
   }
 
   void _onTapRegister(BuildContext context) {
+    if(termsConditionsCheckbox){
     context.read<LoginCubit>().signup(
-          email: userNameController1.text,
-          password: passwordController1.text,
-        );
+          email: userNameController.text,
+          password: passwordController.text,
+        );}else{
+      UtilFunctions.showInSnackBar(context, 'Please accept Terms & Conditions');
+    }
   }
 }
