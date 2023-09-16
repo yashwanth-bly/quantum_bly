@@ -14,6 +14,7 @@ class NewsCubit extends Cubit<NewsState> {
       final NewsResponse response = await _newsRepository.getNews();
       emit(NewsSuccess(articles: response.articles ?? []));
     } catch (e) {
+      print(e);
       emit(NewsError());
     }
   }

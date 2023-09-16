@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:core_ui/views/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -7,51 +8,128 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<NewsCubit>(
-      create: (context) => NewsCubit(newsRepository: NewsRepository())..load(),
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0.5,
-          title: Row(
-            children: [
-              const Icon(
-                Icons.search,
-                color: Colors.blue,
-              ),
-              const Text(
-                'Search',
-                style: TextStyle(
-                  color: Colors.blue,
-                ),
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.logout,
-                  color: Colors.red,
-                ),
-              )
-            ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<NewsCubit>(
+          create: (context) =>
+              NewsCubit(newsRepository: NewsRepository())..load(),
+        ),
+        BlocProvider<AppCoreCubit>(
+          create: (context) => AppCoreCubit(
+            authRepository: context.read<AuthRepository>(),
           ),
         ),
-        body: BlocBuilder<NewsCubit, NewsState>(
-          builder: (context, state) {
-            if (state is NewsLoading) {
-              return const Center(
-                child: Text('Loading...'),
-              );
-            }
-            if (state is NewsError) {
-              return const Center(
-                child: Text('Something thing went wrong, try again'),
-              );
-            }
-            if (state is NewsSuccess) {
-              return _Details(state.articles);
-            }
-            return const SizedBox();
-          },
+      ],
+      child: BlocListener<AppCoreCubit, AppCoreState>(
+        listener: (context, state) {
+          if (state is AppCoreLogout) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const SplashScreen(),
+                ),
+                (route) => false);
+          }
+          if (state is AppCoreLogoutError) {
+            UtilFunctions.showInSnackBar(
+                context, 'Something went wrong, Try again');
+          }
+        },
+        child: const _HomeScreenView(),
+      ),
+    );
+  }
+}
+
+class _HomeScreenView extends StatelessWidget {
+  const _HomeScreenView();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.5,
+        title: Row(
+          children: [
+            const Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
+            const Text(
+              'Search',
+              style: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+            const Spacer(),
+            IconButton(
+              onPressed: () => _onTapLogout(context),
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.red,
+              ),
+            )
+          ],
+        ),
+      ),
+      body: BlocBuilder<NewsCubit, NewsState>(
+        builder: (context, state) {
+          if (state is NewsLoading) {
+            return const Center(
+              child: Text('Loading...'),
+            );
+          }
+          if (state is NewsError) {
+            return const Center(
+              child: Text('Something thing went wrong, try again'),
+            );
+          }
+          if (state is NewsSuccess) {
+            return _Details(state.articles);
+          }
+          return const SizedBox();
+        },
+      ),
+    );
+  }
+
+  void _onTapLogout(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => BlocProvider<AppCoreCubit>.value(
+        value: context.read<AppCoreCubit>(),
+        child: AlertDialog(
+          title: const Text("Logout Alert!"),
+          content: const Text(
+            "Are you sure want to logout?",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: const Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 17,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                context.read<AppCoreCubit>().logout();
+                Navigator.of(ctx).pop();
+              },
+              child: const Text(
+                "Logout",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 17,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
