@@ -87,7 +87,7 @@ class _SignupViewState extends State<SignupView> {
                   ),
                   TextField(
                     controller: userNameController,
-                    // obscureText: true,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Johndeo@gmail.com',
                       hintStyle: const TextStyle(fontWeight: FontWeight.w100),

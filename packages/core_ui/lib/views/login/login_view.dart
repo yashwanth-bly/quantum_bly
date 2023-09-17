@@ -74,7 +74,7 @@ class _LoginViewState extends State<LoginView> {
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: TextField(
                     controller: userNameController,
-                    // obscureText: true,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Johndeo@gmail.com',
                       hintStyle: const TextStyle(fontWeight: FontWeight.w100),
