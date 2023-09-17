@@ -1,7 +1,8 @@
 # Quantum IT Assignment by Yashwanth
 
 A Flutter assignment containing Firebase "email & password" and Google authentications, News API fetching.
-Please find the [APK](https://drive.google.com/file/d/1v1uP0mw_IYdWUv0QBwinc5LyH9_FTB-j/view?usp=sharing) for testing.
+Please find the [APK](https://drive.google.com/file/d/1-5nkR9dutCv3tqLwIM2KcM4Out-EIjVL/view?usp=sharing) for testing.
+Please watch the demo [video](https://drive.google.com/file/d/1araMjGoV03imd91b0L0VMSBPeP3-6ioC/view?usp=drive_link)  
 
 ### Project Structure
 
